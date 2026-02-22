@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Prompting Pro - Tools Prompt untuk Microstocker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            royal: {
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              200: '#e9d5ff',
+              300: '#d8b4fe',
+              400: '#c084fc',
+              500: '#a855f7',
+              600: '#9333ea',
+              700: '#7c3aed',
+              800: '#6b21a8',
+              900: '#581c87',
+              950: '#3b0764'
+            },
+            gold: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706'
+            },
+            surface: {
+              dark: '#0d0a14',
+              card: '#1a1525',
+              elevated: '#251f33'
+            }
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0d0a14;
+      color: #f5f5f5;
+      overflow-x: hidden;
+    }
+    
+    .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .hero-gradient {
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.25), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.15), transparent),
+        linear-gradient(180deg, #0d0a14 0%, #1a1028 100%);
+    }
+    
+    .section-gradient {
+      background: 
+        radial-gradient(ellipse 50% 30% at 20% 80%, rgba(124, 58, 237, 0.1), transparent),
+        linear-gradient(180deg, #1a1028 0%, #0d0a14 100%);
+    }
+    
+    .cta-btn {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #0d0a14 !important;
+      text-decoration: none !important;
+      font-weight: 700;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 24px rgba(245, 158, 11, 0.3);
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
+    }
+    
+    .cta-btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn-secondary {
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid rgba(124, 58, 237, 0.5);
+      color: #e9d5ff !important;
+      text-decoration: none !important;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: rgba(124, 58, 237, 0.8);
+      transform: translateY(-2px);
+    }
+    
+    .feature-card {
+      background: linear-gradient(135deg, rgba(26, 21, 37, 0.8), rgba(37, 31, 51, 0.6));
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .feature-card:hover {
+      border-color: rgba(124, 58, 237, 0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15);
+    }
+    
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .sticky-cta.visible {
+      transform: translateY(0);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.5); }
+    }
+    
+    .animate-fade-in-up { animation: fadeInUp 0.6s ease forwards; }
+    .animate-delay-100 { animation-delay: 0.1s; }
+    .animate-delay-200 { animation-delay: 0.2s; }
+    .animate-delay-300 { animation-delay: 0.3s; }
+    .animate-delay-400 { animation-delay: 0.4s; }
+    
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .countdown-box {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 31, 51, 0.8));
+      border: 1px solid rgba(124, 58, 237, 0.3);
+    }
+    
+    .faq-item { border-bottom: 1px solid rgba(124, 58, 237, 0.2); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-item.active .faq-answer { max-height: 500px; }
+    .faq-item.active .faq-icon { transform: rotate(180deg); }
+    
+    .price-strike { position: relative; }
+    .price-strike::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 2px;
+      background: #ef4444;
+      transform: rotate(-8deg);
+    }
+
+    .table-spec td, .table-spec th {
+      padding: 12px;
+      border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- HERO SECTION -->
+  <section class="hero-gradient min-h-screen relative py-10 px-4">
+    <!-- Decorative elements with pointer-events-none -->
+    <div class="absolute top-20 left-10 w-32 h-32 bg-royal-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-40 right-5 w-48 h-48 bg-royal-500/5 rounded-full blur-3xl pointer-events-none"></div>
+    
+    <nav class="flex justify-between items-center py-4 mb-8 max-w-4xl mx-auto relative z-20">
+      <div class="font-display font-bold text-xl text-white">Master Prompting Pro</div>
+      <div class="text-sm text-royal-300">Lifetime Access</div>
+    </nav>
+    
+    <div class="max-w-4xl mx-auto text-center relative z-20">
+      <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 rounded-full px-4 py-2 mb-6 animate-fade-in-up">
+        <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+        <span class="text-red-300 text-sm font-medium">Peringatan: 73% Microstocker Terkena Similar Content Ban</span>
+      </div>
+      
+      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 animate-fade-in-up animate-delay-100">
+        Portofolio Microstock Kamu
+        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-royal-400 to-royal-300">Bisa Di-Banned Karena</span>
+        <span class="block text-gold-400">Prompt Yang Terlalu Sederhana</span>
+      </h1>
+      
+      <p class="text-lg md:text-xl text-royal-200 mb-8 max-w-2xl mx-auto animate-fade-in-up animate-delay-200">
+        Tools desktop yang menghasilkan <strong class="text-white">prompt unik dan detail teknis fotografi</strong> secara otomatis. Tanpa langganan bulanan. Tanpa ketik manual.
+      </p>
+      
+      <div class="relative mb-10 animate-fade-in-up animate-delay-300">
+        <div class="absolute inset-0 bg-gradient-to-t from-surface-dark via-transparent to-transparent z-10 rounded-2xl pointer-events-none"></div>
+        <img 
+          src="https://raw.githubusercontent.com/ekodwilistianto/testimonimember/main/COVER%20MASTER%20PROMPTING.png" 
+          alt="Master Prompting Pro Cover" 
+          class="rounded-2xl border border-royal-700/30 w-full max-w-3xl mx-auto shadow-2xl relative z-0"
+        >
+        <div class="absolute top-4 right-4 md:right-8 bg-royal-800/90 backdrop-blur-sm border border-royal-600/50 rounded-lg px-4 py-2 z-20 pointer-events-none">
+          <span class="text-royal-200 text-sm">Windows Desktop App</span>
+        </div>
+      </div>
+      
+      <div class="flex flex-col gap-4 max-w-md mx-auto animate-fade-in-up animate-delay-400 relative z-30">
+        <!-- Hero Button scrolls to pricing -->
+        <a href="#pricing" class="cta-btn text-lg px-8 py-4 rounded-xl text-center font-display pulse-glow">
+          Dapatkan Akses Sekarang - Rp 155.000
+        </a>
+        <a href="https://www.youtube.com/watch?v=qaK0ZAHn1wg" target="_blank" class="btn-secondary text-base px-8 py-3 rounded-xl text-center font-display flex items-center justify-center gap-2">
+          <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/>
+          </svg>
+          Video Penjelasan Tools
+        </a>
+        <p class="text-royal-400 text-sm">Hemat Rp 200.000 dari harga normal + Bonus Lifetime Update</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM SECTION -->
+  <section class="py-16 px-4 bg-surface-dark relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-royal-950/50 to-transparent pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto relative z-10">
+      <div class="reveal text-center mb-12">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">Apakah Ini Yang Kamu Rasakan?</h2>
+        <p class="text-royal-300 text-lg">Masalah yang dihadapi hampir semua microstocker</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="reveal feature-card rounded-xl p-5 flex gap-4">
+          <div class="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+          </div>
+          <div>
+            <h3 class="font-display font-semibold text-white mb-1">Hantu "Similar Content"</h3>
+            <p class="text-royal-300 text-sm">Ketakutan akun di-banned karena prompt sederhana dianggap duplikat oleh sistem platform.</p>
+          </div>
+        </div>
+        <div class="reveal feature-card rounded-xl p-5 flex gap-4">
+          <div class="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-display font-semibold text-white mb-1">Stuck Ide & Kreativitas</h3>
+            <p class="text-royal-300 text-sm">Menghabiskan waktu berjam-jam hanya untuk memikirkan ide aset apa yang harus dibuat selanjutnya.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FITUR SECTION -->
+  <section class="py-16 px-4 section-gradient relative">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal text-center mb-12">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">Fitur Utama & Solusi</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6 mb-16">
+        <div class="reveal feature-card rounded-2xl p-6">
+          <h3 class="font-display text-xl font-semibold text-white mb-2">Prompt Otomatis</h3>
+          <p class="text-royal-300 text-sm">Hasilkan prompt teknis lengkap dengan lensa, lighting, dan mood dalam hitungan detik.</p>
+        </div>
+        <div class="reveal feature-card rounded-2xl p-6">
+          <h3 class="font-display text-xl font-semibold text-white mb-2">Unik & Variatif</h3>
+          <p class="text-royal-300 text-sm">AI menghasilkan struktur prompt yang berbeda setiap kali klik untuk mengurangi risiko similar content.</p>
+        </div>
+        <div class="reveal feature-card rounded-2xl p-6">
+          <h3 class="font-display text-xl font-semibold text-white mb-2">Output Sekali Klik</h3>
+          <p class="text-royal-300 text-sm">Format output sudah siap copy-paste dalam sekali klik, tidak berantakan.</p>
+        </div>
+      </div>
+
+      <!-- System Requirements -->
+      <div class="reveal bg-surface-card rounded-2xl border border-royal-700/30 overflow-hidden">
+        <div class="p-6 bg-royal-800/30 border-b border-royal-700/30">
+          <h3 class="font-display text-2xl font-bold text-white">Spesifikasi Sistem Minimal</h3>
+        </div>
+        <table class="w-full text-left table-spec text-sm md:text-base">
+          <tbody>
+            <tr><th class="text-royal-400 font-medium">Sistem Operasi</th><td class="text-white">Windows 10 atau Windows 11 (64-bit)</td></tr>
+            <tr><th class="text-royal-400 font-medium">Processor (CPU)</th><td class="text-white">Minimal Intel Core i3 / AMD Ryzen 3 (Semua generasi)</td></tr>
+            <tr><th class="text-royal-400 font-medium">RAM</th><td class="text-white">Minimal 4 GB (Disarankan 8 GB agar multitasking lancar)</td></tr>
+            <tr><th class="text-royal-400 font-medium">Storage</th><td class="text-white">Hanya butuh space < 100 MB</td></tr>
+            <tr><th class="text-royal-400 font-medium">Koneksi Internet</th><td class="text-white">Wajib Online (Untuk terhubung ke Server OpenAI)</td></tr>
+            <tr><th class="text-royal-400 font-medium">API Requirement</th><td class="text-white">Wajib memiliki <strong>OpenAI API Key</strong> (GPT-4o). Saldo API ditanggung pengguna.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- BONUS SECTION -->
+  <section class="py-16 px-4 bg-surface-dark">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal text-center mb-12">
+        <h2 class="font-display text-3xl font-bold text-white">Yang Kamu Dapatkan</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="reveal feature-card rounded-xl p-5 flex gap-4">
+          <div class="w-10 h-10 bg-royal-600/30 rounded-full flex items-center justify-center text-royal-400 flex-shrink-0">✓</div>
+          <div>
+            <h3 class="text-white font-semibold">Software Master Prompting Pro</h3>
+            <p class="text-royal-400 text-sm italic">Value: Rp 250.000</p>
+          </div>
+        </div>
+        <div class="reveal feature-card rounded-xl p-5 flex gap-4">
+          <div class="w-10 h-10 bg-royal-600/30 rounded-full flex items-center justify-center text-royal-400 flex-shrink-0">✓</div>
+          <div>
+            <h3 class="text-white font-semibold">Menggunakan API Key OpenAI Sendiri</h3>
+            <p class="text-royal-400 text-sm">Kontrol penuh biaya dengan sistem Pay-as-you-go.</p>
+          </div>
+        </div>
+        <div class="reveal feature-card rounded-xl p-5 flex gap-4">
+          <div class="w-10 h-10 bg-royal-600/30 rounded-full flex items-center justify-center text-royal-400 flex-shrink-0">✓</div>
+          <div>
+            <h3 class="text-white font-semibold">Lifetime Update & Tutorial</h3>
+            <p class="text-royal-400 text-sm">Akses pembaruan selamanya tanpa biaya tambahan.</p>
+          </div>
+        </div>
+        <div class="reveal feature-card rounded-xl p-5 flex gap-4">
+          <div class="w-10 h-10 bg-gold-500/20 rounded-full flex items-center justify-center text-gold-400 flex-shrink-0">✓</div>
+          <div>
+            <h3 class="text-white font-semibold">Support 1-on-1 dengan Mentor</h3>
+            <p class="text-royal-400 text-sm">Konsultasi langsung jika ada kendala teknis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="py-16 px-4 bg-surface-dark">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal text-center mb-12">
+        <h2 class="font-display text-3xl font-bold text-white">Pertanyaan Umum</h2>
+      </div>
+      <div class="space-y-4">
+        <div class="reveal faq-item bg-surface-card rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full p-5 flex items-center justify-between text-left">
+            <span class="font-display font-semibold text-white">"Ribet nggak sih setup API Key sendiri?"</span>
+            <svg class="faq-icon w-5 h-5 text-royal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer px-5 pb-5 text-royal-300">
+            Ada video tutorial step-by-step, tinggal sekali klik kamu bisa dapat apikey.
+          </div>
+        </div>
+        <div class="reveal faq-item bg-surface-card rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full p-5 flex items-center justify-between text-left">
+            <span class="font-display font-semibold text-white">"Kenapa harus beli, bukannya bisa pakai ChatGPT gratis?"</span>
+            <svg class="faq-icon w-5 h-5 text-royal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer px-5 pb-5 text-royal-300">
+            ChatGPT gratis membatasi kecepatan dan tidak bisa bulk generate. Master Prompting Pro dirancang khusus untuk workflow Microstock massal dengan format yang rapi.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING SECTION -->
+  <section id="pricing" class="py-16 px-4 bg-surface-dark relative">
+    <div class="max-w-lg mx-auto relative z-10">
+      <div class="reveal text-center mb-8">
+        <p class="text-royal-300 mb-4">Promo berakhir dalam:</p>
+        <div class="flex justify-center gap-3">
+          <div class="countdown-box rounded-lg p-3 text-center min-w-[70px]">
+            <div class="font-display text-2xl font-bold text-white" id="hours">02</div>
+            <div class="text-royal-400 text-xs">Jam</div>
+          </div>
+          <div class="countdown-box rounded-lg p-3 text-center min-w-[70px]">
+            <div class="font-display text-2xl font-bold text-white" id="minutes">47</div>
+            <div class="text-royal-400 text-xs">Menit</div>
+          </div>
+          <div class="countdown-box rounded-lg p-3 text-center min-w-[70px]">
+            <div class="font-display text-2xl font-bold text-white" id="seconds">33</div>
+            <div class="text-royal-400 text-xs">Detik</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="reveal bg-gradient-to-b from-royal-900/50 to-surface-card rounded-2xl border border-royal-700/30 overflow-hidden text-center">
+        <div class="p-6 border-b border-royal-700/30">
+          <span class="inline-block bg-red-500/20 text-red-400 text-xs font-semibold px-3 py-1 rounded-full mb-3">PROMO TERBATAS</span>
+          <h3 class="font-display text-xl font-bold text-white">Master Prompting Pro</h3>
+        </div>
+        <div class="p-8">
+          <div class="flex items-center justify-center gap-3 mb-2">
+            <span class="price-strike text-royal-500 text-xl">Rp 355.000</span>
+            <span class="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">HEMAT 56%</span>
+          </div>
+          <div class="font-display text-5xl font-bold text-white mb-4">Rp 155.000</div>
+          
+          <!-- Checkout Link -->
+          <a href="https://ekodwilistianto.com/ekodwi.id/zmz7jyxg9gm3/checkout?token=cGFyYW1zPSU1QiU1RCZiaWRfcHJpY2U9MCZxdHlfcHJvZD0x" target="_blank" class="cta-btn text-lg px-8 py-4 rounded-xl block font-display pulse-glow relative z-30">
+            Beli Sekarang
+          </a>
+          
+          <p class="text-royal-400 text-sm mt-4">Sekali bayar, akses selamanya.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER SECTION -->
+  <section class="py-12 px-4 bg-surface-dark border-t border-royal-900/30">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal bg-red-500/5 border border-red-500/20 rounded-2xl p-6 md:p-8">
+        <h4 class="text-red-400 font-bold mb-3 flex items-center gap-2">
+          ⚠️ DISCLAIMER
+        </h4>
+        <p class="text-royal-300 text-sm md:text-base leading-relaxed">
+          Tools ini dimaksimalkan untuk mengurangi risiko <strong>Similar Content</strong> dengan menghasilkan struktur prompt yang unik. Namun, harap ingat bahwa <strong>tools ini tidak menjamin 100% bebas dari penolakan Similar Content</strong>. Isu Similar tidak hanya disebabkan oleh prompt, tetapi juga dipengaruhi oleh kemiripan komposisi visual, warna, dan objek dengan database aset yang sudah ada di platform Microstock.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COPYRIGHT -->
+  <div class="py-10 px-4 text-center border-t border-royal-900/50 bg-surface-dark relative z-10">
+    <p class="text-royal-600 text-sm">Master Prompting Pro 2025. All rights reserved.</p>
+  </div>
+
+  <!-- STICKY CTA MOBILE -->
+  <div class="sticky-cta md:hidden" id="sticky-cta">
+    <div class="bg-surface-card/95 backdrop-blur-md border-t border-royal-700/30 p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+      <div class="max-w-md mx-auto flex items-center justify-between gap-4">
+        <div class="flex flex-col">
+          <span class="text-royal-500 text-xs line-through leading-none mb-1">Rp 355.000</span>
+          <span class="text-white font-display text-xl font-bold leading-none">Rp 155.000</span>
+        </div>
+        <a href="https://ekodwilistianto.com/ekodwi.id/zmz7jyxg9gm3/checkout?token=cGFyYW1zPSU1QiU1RCZiaWRfcHJpY2U9MCZxdHlfcHJvZD0x" target="_blank" class="cta-btn !w-auto px-6 py-3 rounded-xl text-sm font-display whitespace-nowrap relative z-[1001]">
+          Beli Sekarang
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Variables
+    const countdownHours = document.getElementById('hours');
+    const countdownMinutes = document.getElementById('minutes');
+    const countdownSeconds = document.getElementById('seconds');
+    const stickyCta = document.getElementById('sticky-cta');
+
+    // Dummy Countdown logic
+    let totalSeconds = 2 * 3600 + 47 * 60 + 33;
+    function updateCountdown() {
+      if (totalSeconds <= 0) totalSeconds = 3 * 3600;
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+      if (countdownHours) countdownHours.textContent = String(h).padStart(2, '0');
+      if (countdownMinutes) countdownMinutes.textContent = String(m).padStart(2, '0');
+      if (countdownSeconds) countdownSeconds.textContent = String(s).padStart(2, '0');
+      totalSeconds--;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Scroll reveal function
+    function revealElements() {
+      const reveals = document.querySelectorAll('.reveal');
+      const windowHeight = window.innerHeight;
+      reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < windowHeight - 80) el.classList.add('active');
+      });
+    }
+
+    // Handle sticky mobile CTA
+    function handleStickyCta() {
+      if (!stickyCta) return;
+      if (window.scrollY > 600) stickyCta.classList.add('visible');
+      else stickyCta.classList.remove('visible');
+    }
+
+    // FAQ logic
+    function initFaq() {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const trigger = item.querySelector('.faq-trigger');
+        if (trigger) {
+          trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isActive = item.classList.contains('active');
+            faqItems.forEach(other => other.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+          });
+        }
+      });
+    }
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            window.scrollTo({
+              top: target.offsetTop - 20,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+
+    // Listeners
+    window.addEventListener('scroll', () => { revealElements(); handleStickyCta(); });
+    document.addEventListener('DOMContentLoaded', () => {
+      initFaq();
+      revealElements();
+      handleStickyCta();
+    });
+  </script>
+</body>
+</html>
